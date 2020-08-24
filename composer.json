@@ -1,5 +1,5 @@
 {
-    "name": "wikia/docker-php",
+    "name": "fandom/docker-php",
     "description": "PHP client for Docker API generated from Docker's OpenAPI spec",
     "type": "library",
     "require": {
