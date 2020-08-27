@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class PluginPush extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class PluginPush extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     protected $name;
     /**
@@ -15,7 +15,7 @@ class PluginPush extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Ja
     {
         $this->name = $name;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';

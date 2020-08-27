@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class PluginList extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class PluginList extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
     * Returns information about installed plugins.
@@ -22,7 +22,7 @@ class PluginList extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Ja
     {
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';

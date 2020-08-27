@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class SwarmJoin extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class SwarmJoin extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
      * 
@@ -13,7 +13,7 @@ class SwarmJoin extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jan
     {
         $this->body = $body;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';

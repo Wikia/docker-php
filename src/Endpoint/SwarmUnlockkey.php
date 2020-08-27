@@ -2,9 +2,9 @@
 
 namespace Docker\Api\Endpoint;
 
-class SwarmUnlockkey extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class SwarmUnlockkey extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';

@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ImageList extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class ImageList extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
     * Returns a list of images on the server. Note that it uses a different, smaller representation of an image than inspecting a single image.
@@ -27,7 +27,7 @@ class ImageList extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jan
     {
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';

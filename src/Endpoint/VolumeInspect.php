@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class VolumeInspect extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class VolumeInspect extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     protected $name;
     /**
@@ -14,7 +14,7 @@ class VolumeInspect extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements 
     {
         $this->name = $name;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';

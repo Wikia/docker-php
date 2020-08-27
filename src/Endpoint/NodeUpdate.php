@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class NodeUpdate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class NodeUpdate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     protected $id;
     /**
@@ -22,7 +22,7 @@ class NodeUpdate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Ja
         $this->body = $body;
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';

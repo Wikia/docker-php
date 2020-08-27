@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ImageGet extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class ImageGet extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     protected $name;
     /**
@@ -37,7 +37,7 @@ class ImageGet extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane
     {
         $this->name = $name;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';

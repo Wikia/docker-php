@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class DistributionInspect extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class DistributionInspect extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     protected $name;
     /**
@@ -14,7 +14,7 @@ class DistributionInspect extends \Jane\OpenApiRuntime\Client\BaseEndpoint imple
     {
         $this->name = $name;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';

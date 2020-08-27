@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ServiceCreate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class ServiceCreate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
     * 
@@ -22,7 +22,7 @@ class ServiceCreate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements 
         $this->body = $body;
         $this->headerParameters = $headerParameters;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';

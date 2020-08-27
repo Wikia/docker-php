@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class NetworkList extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class NetworkList extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
     * Returns a list of networks. For details on the format, see the
@@ -36,7 +36,7 @@ class NetworkList extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
     {
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';

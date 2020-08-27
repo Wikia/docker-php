@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class TaskList extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class TaskList extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
     * 
@@ -26,7 +26,7 @@ class TaskList extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane
     {
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';
