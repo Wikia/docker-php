@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ImageTag extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class ImageTag extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     protected $name;
     /**
@@ -19,7 +19,7 @@ class ImageTag extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane
         $this->name = $name;
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';

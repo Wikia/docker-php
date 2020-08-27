@@ -2,7 +2,7 @@
 
 namespace Docker\Api;
 
-class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
+class Client extends \Jane\OpenApiRuntime\Client\Client
 {
     /**
     * Returns a list of containers. For details on the format, see the
@@ -52,7 +52,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerList(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerList($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerList($queryParameters), $fetch);
     }
     /**
     * 
@@ -73,7 +73,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerCreate(\Docker\Api\Model\ContainersCreatePostBody $body, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerCreate($body, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerCreate($body, $queryParameters), $fetch);
     }
     /**
      * Return low-level information about a container.
@@ -90,7 +90,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function containerInspect(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerInspect($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerInspect($id, $queryParameters), $fetch);
     }
     /**
     * On Unix systems, this is done by running the `ps` command. This endpoint
@@ -109,7 +109,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerTop(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerTop($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerTop($id, $queryParameters), $fetch);
     }
     /**
     * Get `stdout` and `stderr` logs from a container.
@@ -138,7 +138,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerLogs(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerLogs($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerLogs($id, $queryParameters), $fetch);
     }
     /**
     * Returns which files in a container's filesystem have been added, deleted,
@@ -158,7 +158,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerChanges(string $id, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerChanges($id), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerChanges($id), $fetch);
     }
     /**
      * Export the contents of a container as a tarball.
@@ -172,7 +172,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function containerExport(string $id, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerExport($id), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerExport($id), $fetch);
     }
     /**
     * This endpoint returns a live stream of a container’s resource usage
@@ -211,7 +211,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerStats(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerStats($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerStats($id, $queryParameters), $fetch);
     }
     /**
      * Resize the TTY for a container.
@@ -229,7 +229,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function containerResize(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerResize($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerResize($id, $queryParameters), $fetch);
     }
     /**
     * 
@@ -249,7 +249,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerStart(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerStart($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerStart($id, $queryParameters), $fetch);
     }
     /**
      * 
@@ -266,7 +266,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function containerStop(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerStop($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerStop($id, $queryParameters), $fetch);
     }
     /**
      * 
@@ -283,7 +283,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function containerRestart(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerRestart($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerRestart($id, $queryParameters), $fetch);
     }
     /**
     * Send a POSIX signal to a container, defaulting to killing to the
@@ -303,7 +303,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerKill(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerKill($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerKill($id, $queryParameters), $fetch);
     }
     /**
     * Change various configuration options of a container without having to
@@ -320,7 +320,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerUpdate(string $id, \Docker\Api\Model\ContainersIdUpdatePostBody $update, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerUpdate($id, $update), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerUpdate($id, $update), $fetch);
     }
     /**
      * 
@@ -338,7 +338,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function containerRename(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerRename($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerRename($id, $queryParameters), $fetch);
     }
     /**
     * Use the freezer cgroup to suspend all processes in a container.
@@ -358,7 +358,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerPause(string $id, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerPause($id), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerPause($id), $fetch);
     }
     /**
      * Resume a container which has been paused.
@@ -372,7 +372,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function containerUnpause(string $id, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerUnpause($id), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerUnpause($id), $fetch);
     }
     /**
     * Attach to a container to read its output or send it input. You can attach
@@ -500,7 +500,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerAttach(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerAttach($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerAttach($id, $queryParameters), $fetch);
     }
     /**
     * 
@@ -526,7 +526,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerAttachWebsocket(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerAttachWebsocket($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerAttachWebsocket($id, $queryParameters), $fetch);
     }
     /**
     * Block until a container stops, then returns the exit code.
@@ -545,7 +545,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerWait(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerWait($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerWait($id, $queryParameters), $fetch);
     }
     /**
      * 
@@ -566,7 +566,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function containerDelete(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerDelete($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerDelete($id, $queryParameters), $fetch);
     }
     /**
      * Get a tar archive of a resource in the filesystem of container id.
@@ -584,7 +584,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function containerArchive(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerArchive($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerArchive($id, $queryParameters), $fetch);
     }
     /**
     * A response header `X-Docker-Container-Path-Stat` is returned, containing
@@ -605,7 +605,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerArchiveInfo(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerArchiveInfo($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerArchiveInfo($id, $queryParameters), $fetch);
     }
     /**
     * Upload a tar archive to be extracted to a path in the filesystem of container id.
@@ -635,7 +635,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function putContainerArchive(string $id, $inputStream, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\PutContainerArchive($id, $inputStream, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\PutContainerArchive($id, $inputStream, $queryParameters), $fetch);
     }
     /**
     * 
@@ -655,7 +655,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function containerPrune(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerPrune($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerPrune($queryParameters), $fetch);
     }
     /**
     * Returns a list of images on the server. Note that it uses a different, smaller representation of an image than inspecting a single image.
@@ -682,7 +682,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function imageList(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ImageList($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ImageList($queryParameters), $fetch);
     }
     /**
     * Build an image from a tar archive with a `Dockerfile` in it.
@@ -760,7 +760,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function imageBuild($inputStream, array $queryParameters = array(), array $headerParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ImageBuild($inputStream, $queryParameters, $headerParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ImageBuild($inputStream, $queryParameters, $headerParameters), $fetch);
     }
     /**
     * 
@@ -790,7 +790,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function buildPrune(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\BuildPrune($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\BuildPrune($queryParameters), $fetch);
     }
     /**
     * Create an image by either pulling it from a registry or importing it.
@@ -819,7 +819,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function imageCreate(string $inputImage, array $queryParameters = array(), array $headerParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ImageCreate($inputImage, $queryParameters, $headerParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ImageCreate($inputImage, $queryParameters, $headerParameters), $fetch);
     }
     /**
      * Return low-level information about an image.
@@ -833,7 +833,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function imageInspect(string $name, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ImageInspect($name), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ImageInspect($name), $fetch);
     }
     /**
      * Return parent layers of an image.
@@ -847,7 +847,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function imageHistory(string $name, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ImageHistory($name), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ImageHistory($name), $fetch);
     }
     /**
     * Push an image to a registry.
@@ -878,7 +878,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function imagePush(string $name, array $queryParameters = array(), array $headerParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ImagePush($name, $queryParameters, $headerParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ImagePush($name, $queryParameters, $headerParameters), $fetch);
     }
     /**
      * Tag an image so that it becomes part of a repository.
@@ -898,7 +898,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function imageTag(string $name, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ImageTag($name, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ImageTag($name, $queryParameters), $fetch);
     }
     /**
     * Remove an image, along with any untagged parent images that were
@@ -922,7 +922,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function imageDelete(string $name, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ImageDelete($name, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ImageDelete($name, $queryParameters), $fetch);
     }
     /**
     * Search for an image on Docker Hub.
@@ -944,7 +944,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function imageSearch(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ImageSearch($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ImageSearch($queryParameters), $fetch);
     }
     /**
     * 
@@ -966,7 +966,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function imagePrune(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ImagePrune($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ImagePrune($queryParameters), $fetch);
     }
     /**
     * Validate credentials for a registry and, if available, get an identity
@@ -981,7 +981,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function systemAuth(\Docker\Api\Model\AuthConfig $authConfig, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SystemAuth($authConfig), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SystemAuth($authConfig), $fetch);
     }
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
@@ -991,7 +991,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function systemInfo(string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SystemInfo(), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SystemInfo(), $fetch);
     }
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
@@ -1001,7 +1001,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function systemVersion(string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SystemVersion(), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SystemVersion(), $fetch);
     }
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
@@ -1011,7 +1011,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function systemPing(string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SystemPing(), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SystemPing(), $fetch);
     }
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
@@ -1021,7 +1021,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function systemPingHead(string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SystemPingHead(), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SystemPingHead(), $fetch);
     }
     /**
      * 
@@ -1044,7 +1044,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function imageCommit(\Docker\Api\Model\ContainerConfig $containerConfig, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ImageCommit($containerConfig, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ImageCommit($containerConfig, $queryParameters), $fetch);
     }
     /**
     * Stream real-time events from the server.
@@ -1099,7 +1099,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function systemEvents(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SystemEvents($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SystemEvents($queryParameters), $fetch);
     }
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
@@ -1109,7 +1109,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function systemDataUsage(string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SystemDataUsage(), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SystemDataUsage(), $fetch);
     }
     /**
     * Get a tarball containing all images and metadata for a repository.
@@ -1145,7 +1145,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function imageGet(string $name, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ImageGet($name), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ImageGet($name), $fetch);
     }
     /**
     * Get a tarball containing all images and metadata for several image
@@ -1170,7 +1170,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function imageGetAll(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ImageGetAll($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ImageGetAll($queryParameters), $fetch);
     }
     /**
     * Load a set of images and tags into a repository.
@@ -1189,7 +1189,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function imageLoad($imagesTarball, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ImageLoad($imagesTarball, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ImageLoad($imagesTarball, $queryParameters), $fetch);
     }
     /**
      * Run a command inside a running container.
@@ -1205,7 +1205,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function containerExec(string $id, \Docker\Api\Model\ContainersIdExecPostBody $execConfig, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ContainerExec($id, $execConfig), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ContainerExec($id, $execConfig), $fetch);
     }
     /**
     * Starts a previously set up exec instance. If detach is true, this endpoint
@@ -1223,7 +1223,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function execStart(string $id, \Docker\Api\Model\ExecIdStartPostBody $execStartConfig, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ExecStart($id, $execStartConfig), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ExecStart($id, $execStartConfig), $fetch);
     }
     /**
     * Resize the TTY session used by an exec instance. This endpoint only works
@@ -1242,7 +1242,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function execResize(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ExecResize($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ExecResize($id, $queryParameters), $fetch);
     }
     /**
      * Return low-level information about an exec instance.
@@ -1256,7 +1256,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function execInspect(string $id, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ExecInspect($id), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ExecInspect($id), $fetch);
     }
     /**
     * 
@@ -1282,7 +1282,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function volumeList(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\VolumeList($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\VolumeList($queryParameters), $fetch);
     }
     /**
      * 
@@ -1295,7 +1295,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function volumeCreate(\Docker\Api\Model\VolumesCreatePostBody $volumeConfig, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\VolumeCreate($volumeConfig), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\VolumeCreate($volumeConfig), $fetch);
     }
     /**
      * Instruct the driver to remove the volume.
@@ -1313,7 +1313,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function volumeDelete(string $name, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\VolumeDelete($name, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\VolumeDelete($name, $queryParameters), $fetch);
     }
     /**
      * 
@@ -1327,7 +1327,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function volumeInspect(string $name, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\VolumeInspect($name), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\VolumeInspect($name), $fetch);
     }
     /**
     * 
@@ -1346,7 +1346,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function volumePrune(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\VolumePrune($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\VolumePrune($queryParameters), $fetch);
     }
     /**
     * Returns a list of networks. For details on the format, see the
@@ -1382,7 +1382,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function networkList(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\NetworkList($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\NetworkList($queryParameters), $fetch);
     }
     /**
      * 
@@ -1397,7 +1397,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function networkDelete(string $id, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\NetworkDelete($id), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\NetworkDelete($id), $fetch);
     }
     /**
      * 
@@ -1415,7 +1415,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function networkInspect(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\NetworkInspect($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\NetworkInspect($id, $queryParameters), $fetch);
     }
     /**
      * 
@@ -1430,7 +1430,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function networkCreate(\Docker\Api\Model\NetworksCreatePostBody $networkConfig, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\NetworkCreate($networkConfig), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\NetworkCreate($networkConfig), $fetch);
     }
     /**
      * 
@@ -1446,7 +1446,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function networkConnect(string $id, \Docker\Api\Model\NetworksIdConnectPostBody $container, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\NetworkConnect($id, $container), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\NetworkConnect($id, $container), $fetch);
     }
     /**
      * 
@@ -1462,7 +1462,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function networkDisconnect(string $id, \Docker\Api\Model\NetworksIdDisconnectPostBody $container, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\NetworkDisconnect($id, $container), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\NetworkDisconnect($id, $container), $fetch);
     }
     /**
     * 
@@ -1482,7 +1482,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function networkPrune(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\NetworkPrune($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\NetworkPrune($queryParameters), $fetch);
     }
     /**
     * Returns information about installed plugins.
@@ -1504,7 +1504,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function pluginList(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\PluginList($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\PluginList($queryParameters), $fetch);
     }
     /**
     * 
@@ -1521,7 +1521,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function getPluginPrivileges(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\GetPluginPrivileges($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\GetPluginPrivileges($queryParameters), $fetch);
     }
     /**
     * Pulls and installs a plugin. After the plugin is installed, it can be
@@ -1554,7 +1554,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function pluginPull(array $body, array $queryParameters = array(), array $headerParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\PluginPull($body, $queryParameters, $headerParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\PluginPull($body, $queryParameters, $headerParameters), $fetch);
     }
     /**
     * 
@@ -1570,7 +1570,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function pluginInspect(string $name, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\PluginInspect($name), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\PluginInspect($name), $fetch);
     }
     /**
     * 
@@ -1591,7 +1591,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function pluginDelete(string $name, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\PluginDelete($name, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\PluginDelete($name, $queryParameters), $fetch);
     }
     /**
     * 
@@ -1610,7 +1610,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function pluginEnable(string $name, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\PluginEnable($name, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\PluginEnable($name, $queryParameters), $fetch);
     }
     /**
     * 
@@ -1626,7 +1626,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function pluginDisable(string $name, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\PluginDisable($name), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\PluginDisable($name), $fetch);
     }
     /**
     * 
@@ -1657,7 +1657,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function pluginUpgrade(string $name, array $body, array $queryParameters = array(), array $headerParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\PluginUpgrade($name, $body, $queryParameters, $headerParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\PluginUpgrade($name, $body, $queryParameters, $headerParameters), $fetch);
     }
     /**
     * 
@@ -1675,7 +1675,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function pluginCreate($tarContext, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\PluginCreate($tarContext, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\PluginCreate($tarContext, $queryParameters), $fetch);
     }
     /**
     * Push a plugin to the registry.
@@ -1692,7 +1692,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function pluginPush(string $name, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\PluginPush($name), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\PluginPush($name), $fetch);
     }
     /**
     * 
@@ -1709,7 +1709,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function pluginSet(string $name, array $body, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\PluginSet($name, $body), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\PluginSet($name, $body), $fetch);
     }
     /**
     * 
@@ -1734,7 +1734,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function nodeList(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\NodeList($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\NodeList($queryParameters), $fetch);
     }
     /**
      * 
@@ -1752,7 +1752,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function nodeDelete(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\NodeDelete($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\NodeDelete($id, $queryParameters), $fetch);
     }
     /**
      * 
@@ -1767,7 +1767,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function nodeInspect(string $id, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\NodeInspect($id), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\NodeInspect($id), $fetch);
     }
     /**
     * 
@@ -1789,7 +1789,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function nodeUpdate(string $id, \Docker\Api\Model\NodeSpec $body, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\NodeUpdate($id, $body, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\NodeUpdate($id, $body, $queryParameters), $fetch);
     }
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
@@ -1801,7 +1801,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function swarmInspect(string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SwarmInspect(), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SwarmInspect(), $fetch);
     }
     /**
      * 
@@ -1816,7 +1816,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function swarmInit(\Docker\Api\Model\SwarmInitPostBody $body, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SwarmInit($body), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SwarmInit($body), $fetch);
     }
     /**
      * 
@@ -1831,7 +1831,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function swarmJoin(\Docker\Api\Model\SwarmJoinPostBody $body, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SwarmJoin($body), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SwarmJoin($body), $fetch);
     }
     /**
     * 
@@ -1849,7 +1849,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function swarmLeave(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SwarmLeave($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SwarmLeave($queryParameters), $fetch);
     }
     /**
     * 
@@ -1872,7 +1872,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function swarmUpdate(\Docker\Api\Model\SwarmSpec $body, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SwarmUpdate($body, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SwarmUpdate($body, $queryParameters), $fetch);
     }
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
@@ -1883,7 +1883,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function swarmUnlockkey(string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SwarmUnlockkey(), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SwarmUnlockkey(), $fetch);
     }
     /**
      * 
@@ -1897,7 +1897,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function swarmUnlock(\Docker\Api\Model\SwarmUnlockPostBody $body, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SwarmUnlock($body), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SwarmUnlock($body), $fetch);
     }
     /**
     * 
@@ -1922,7 +1922,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function serviceList(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ServiceList($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ServiceList($queryParameters), $fetch);
     }
     /**
     * 
@@ -1947,7 +1947,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function serviceCreate(\Docker\Api\Model\ServicesCreatePostBody $body, array $headerParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ServiceCreate($body, $headerParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ServiceCreate($body, $headerParameters), $fetch);
     }
     /**
      * 
@@ -1962,7 +1962,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function serviceDelete(string $id, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ServiceDelete($id), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ServiceDelete($id), $fetch);
     }
     /**
      * 
@@ -1980,7 +1980,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function serviceInspect(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ServiceInspect($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ServiceInspect($id, $queryParameters), $fetch);
     }
     /**
     * 
@@ -2020,7 +2020,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function serviceUpdate(string $id, \Docker\Api\Model\ServicesIdUpdatePostBody $body, array $queryParameters = array(), array $headerParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ServiceUpdate($id, $body, $queryParameters, $headerParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ServiceUpdate($id, $body, $queryParameters, $headerParameters), $fetch);
     }
     /**
     * Get `stdout` and `stderr` logs from a service. See also
@@ -2051,7 +2051,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function serviceLogs(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ServiceLogs($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ServiceLogs($id, $queryParameters), $fetch);
     }
     /**
     * 
@@ -2078,7 +2078,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function taskList(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\TaskList($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\TaskList($queryParameters), $fetch);
     }
     /**
      * 
@@ -2093,7 +2093,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function taskInspect(string $id, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\TaskInspect($id), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\TaskInspect($id), $fetch);
     }
     /**
     * Get `stdout` and `stderr` logs from a task.
@@ -2124,7 +2124,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function taskLogs(string $id, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\TaskLogs($id, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\TaskLogs($id, $queryParameters), $fetch);
     }
     /**
     * 
@@ -2149,7 +2149,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function secretList(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SecretList($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SecretList($queryParameters), $fetch);
     }
     /**
      * 
@@ -2164,7 +2164,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function secretCreate(\Docker\Api\Model\SecretsCreatePostBody $body, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SecretCreate($body), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SecretCreate($body), $fetch);
     }
     /**
      * 
@@ -2179,7 +2179,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function secretDelete(string $id, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SecretDelete($id), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SecretDelete($id), $fetch);
     }
     /**
      * 
@@ -2194,7 +2194,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function secretInspect(string $id, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SecretInspect($id), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SecretInspect($id), $fetch);
     }
     /**
     * 
@@ -2219,7 +2219,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function secretUpdate(string $id, \Docker\Api\Model\SecretSpec $body, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\SecretUpdate($id, $body, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\SecretUpdate($id, $body, $queryParameters), $fetch);
     }
     /**
     * 
@@ -2244,7 +2244,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function configList(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ConfigList($queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ConfigList($queryParameters), $fetch);
     }
     /**
      * 
@@ -2259,7 +2259,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function configCreate(\Docker\Api\Model\ConfigsCreatePostBody $body, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ConfigCreate($body), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ConfigCreate($body), $fetch);
     }
     /**
      * 
@@ -2274,7 +2274,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function configDelete(string $id, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ConfigDelete($id), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ConfigDelete($id), $fetch);
     }
     /**
      * 
@@ -2289,7 +2289,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function configInspect(string $id, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ConfigInspect($id), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ConfigInspect($id), $fetch);
     }
     /**
     * 
@@ -2314,7 +2314,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
     */
     public function configUpdate(string $id, \Docker\Api\Model\ConfigSpec $body, array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\ConfigUpdate($id, $body, $queryParameters), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\ConfigUpdate($id, $body, $queryParameters), $fetch);
     }
     /**
      * Return image digest and platform information by contacting the registry.
@@ -2328,7 +2328,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function distributionInspect(string $name, string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\DistributionInspect($name), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\DistributionInspect($name), $fetch);
     }
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
@@ -2339,7 +2339,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function session(string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \Docker\Api\Endpoint\Session(), $fetch);
+        return $this->executeEndpoint(new \Docker\Api\Endpoint\Session(), $fetch);
     }
     public static function create($httpClient = null, array $additionalPlugins = array())
     {

@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ImageLoad extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class ImageLoad extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
     * Load a set of images and tags into a repository.
@@ -20,7 +20,7 @@ class ImageLoad extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jan
         $this->body = $imagesTarball;
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';

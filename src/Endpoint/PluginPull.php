@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class PluginPull extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class PluginPull extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
     * Pulls and installs a plugin. After the plugin is installed, it can be
@@ -35,7 +35,7 @@ class PluginPull extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Ja
         $this->queryParameters = $queryParameters;
         $this->headerParameters = $headerParameters;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';

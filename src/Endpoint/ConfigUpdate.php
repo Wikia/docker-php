@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ConfigUpdate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class ConfigUpdate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     protected $id;
     /**
@@ -25,7 +25,7 @@ class ConfigUpdate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \
         $this->body = $body;
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';

@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ExecInspect extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class ExecInspect extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     protected $id;
     /**
@@ -14,7 +14,7 @@ class ExecInspect extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
     {
         $this->id = $id;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';

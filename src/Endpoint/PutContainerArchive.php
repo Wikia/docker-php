@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class PutContainerArchive extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class PutContainerArchive extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     protected $id;
     /**
@@ -30,7 +30,7 @@ class PutContainerArchive extends \Jane\OpenApiRuntime\Client\BaseEndpoint imple
         $this->body = $inputStream;
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'PUT';
