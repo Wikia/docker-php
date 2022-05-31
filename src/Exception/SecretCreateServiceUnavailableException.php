@@ -2,15 +2,18 @@
 
 namespace Docker\Api\Exception;
 
-class SecretCreateServiceUnavailableException extends \RuntimeException implements ServerException
+class SecretCreateServiceUnavailableException extends ServiceUnavailableException
 {
+    /**
+     * @var \Docker\Api\Model\ErrorResponse
+     */
     private $errorResponse;
     public function __construct(\Docker\Api\Model\ErrorResponse $errorResponse)
     {
-        parent::__construct('node is not part of a swarm', 503);
+        parent::__construct('node is not part of a swarm');
         $this->errorResponse = $errorResponse;
     }
-    public function getErrorResponse()
+    public function getErrorResponse() : \Docker\Api\Model\ErrorResponse
     {
         return $this->errorResponse;
     }

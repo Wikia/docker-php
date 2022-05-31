@@ -2,15 +2,18 @@
 
 namespace Docker\Api\Exception;
 
-class ContainerDeleteConflictException extends \RuntimeException implements ClientException
+class ContainerDeleteConflictException extends ConflictException
 {
+    /**
+     * @var \Docker\Api\Model\ErrorResponse
+     */
     private $errorResponse;
     public function __construct(\Docker\Api\Model\ErrorResponse $errorResponse)
     {
-        parent::__construct('conflict', 409);
+        parent::__construct('conflict');
         $this->errorResponse = $errorResponse;
     }
-    public function getErrorResponse()
+    public function getErrorResponse() : \Docker\Api\Model\ErrorResponse
     {
         return $this->errorResponse;
     }

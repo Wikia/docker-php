@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class PluginConfigArgsNormalizer implements DenormalizerInterface, NormalizerInt
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\PluginConfigArgs';
@@ -24,6 +27,9 @@ class PluginConfigArgsNormalizer implements DenormalizerInterface, NormalizerInt
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\PluginConfigArgs';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class PluginConfigArgsNormalizer implements DenormalizerInterface, NormalizerInt
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\PluginConfigArgs();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('Name', $data) && $data['Name'] !== null) {
             $object->setName($data['Name']);
         }
@@ -67,29 +76,24 @@ class PluginConfigArgsNormalizer implements DenormalizerInterface, NormalizerInt
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        if (null !== $object->getName()) {
-            $data['Name'] = $object->getName();
+        $data['Name'] = $object->getName();
+        $data['Description'] = $object->getDescription();
+        $values = array();
+        foreach ($object->getSettable() as $value) {
+            $values[] = $value;
         }
-        if (null !== $object->getDescription()) {
-            $data['Description'] = $object->getDescription();
+        $data['Settable'] = $values;
+        $values_1 = array();
+        foreach ($object->getValue() as $value_1) {
+            $values_1[] = $value_1;
         }
-        if (null !== $object->getSettable()) {
-            $values = array();
-            foreach ($object->getSettable() as $value) {
-                $values[] = $value;
-            }
-            $data['Settable'] = $values;
-        }
-        if (null !== $object->getValue()) {
-            $values_1 = array();
-            foreach ($object->getValue() as $value_1) {
-                $values_1[] = $value_1;
-            }
-            $data['Value'] = $values_1;
-        }
+        $data['Value'] = $values_1;
         return $data;
     }
 }

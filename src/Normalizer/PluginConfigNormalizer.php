@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\PluginConfig';
@@ -24,6 +27,9 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\PluginConfig';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\PluginConfig();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('DockerVersion', $data) && $data['DockerVersion'] !== null) {
             $object->setDockerVersion($data['DockerVersion']);
         }
@@ -143,66 +152,43 @@ class PluginConfigNormalizer implements DenormalizerInterface, NormalizerInterfa
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
         if (null !== $object->getDockerVersion()) {
             $data['DockerVersion'] = $object->getDockerVersion();
         }
-        if (null !== $object->getDescription()) {
-            $data['Description'] = $object->getDescription();
+        $data['Description'] = $object->getDescription();
+        $data['Documentation'] = $object->getDocumentation();
+        $data['Interface'] = $this->normalizer->normalize($object->getInterface(), 'json', $context);
+        $values = array();
+        foreach ($object->getEntrypoint() as $value) {
+            $values[] = $value;
         }
-        if (null !== $object->getDocumentation()) {
-            $data['Documentation'] = $object->getDocumentation();
-        }
-        if (null !== $object->getInterface()) {
-            $data['Interface'] = $this->normalizer->normalize($object->getInterface(), 'json', $context);
-        }
-        if (null !== $object->getEntrypoint()) {
-            $values = array();
-            foreach ($object->getEntrypoint() as $value) {
-                $values[] = $value;
-            }
-            $data['Entrypoint'] = $values;
-        }
-        if (null !== $object->getWorkDir()) {
-            $data['WorkDir'] = $object->getWorkDir();
-        }
+        $data['Entrypoint'] = $values;
+        $data['WorkDir'] = $object->getWorkDir();
         if (null !== $object->getUser()) {
             $data['User'] = $this->normalizer->normalize($object->getUser(), 'json', $context);
         }
-        if (null !== $object->getNetwork()) {
-            $data['Network'] = $this->normalizer->normalize($object->getNetwork(), 'json', $context);
+        $data['Network'] = $this->normalizer->normalize($object->getNetwork(), 'json', $context);
+        $data['Linux'] = $this->normalizer->normalize($object->getLinux(), 'json', $context);
+        $data['PropagatedMount'] = $object->getPropagatedMount();
+        $data['IpcHost'] = $object->getIpcHost();
+        $data['PidHost'] = $object->getPidHost();
+        $values_1 = array();
+        foreach ($object->getMounts() as $value_1) {
+            $values_1[] = $this->normalizer->normalize($value_1, 'json', $context);
         }
-        if (null !== $object->getLinux()) {
-            $data['Linux'] = $this->normalizer->normalize($object->getLinux(), 'json', $context);
+        $data['Mounts'] = $values_1;
+        $values_2 = array();
+        foreach ($object->getEnv() as $value_2) {
+            $values_2[] = $this->normalizer->normalize($value_2, 'json', $context);
         }
-        if (null !== $object->getPropagatedMount()) {
-            $data['PropagatedMount'] = $object->getPropagatedMount();
-        }
-        if (null !== $object->getIpcHost()) {
-            $data['IpcHost'] = $object->getIpcHost();
-        }
-        if (null !== $object->getPidHost()) {
-            $data['PidHost'] = $object->getPidHost();
-        }
-        if (null !== $object->getMounts()) {
-            $values_1 = array();
-            foreach ($object->getMounts() as $value_1) {
-                $values_1[] = $this->normalizer->normalize($value_1, 'json', $context);
-            }
-            $data['Mounts'] = $values_1;
-        }
-        if (null !== $object->getEnv()) {
-            $values_2 = array();
-            foreach ($object->getEnv() as $value_2) {
-                $values_2[] = $this->normalizer->normalize($value_2, 'json', $context);
-            }
-            $data['Env'] = $values_2;
-        }
-        if (null !== $object->getArgs()) {
-            $data['Args'] = $this->normalizer->normalize($object->getArgs(), 'json', $context);
-        }
+        $data['Env'] = $values_2;
+        $data['Args'] = $this->normalizer->normalize($object->getArgs(), 'json', $context);
         if (null !== $object->getRootfs()) {
             $data['rootfs'] = $this->normalizer->normalize($object->getRootfs(), 'json', $context);
         }

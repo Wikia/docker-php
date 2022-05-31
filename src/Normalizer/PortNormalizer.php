@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class PortNormalizer implements DenormalizerInterface, NormalizerInterface, Deno
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\Port';
@@ -24,6 +27,9 @@ class PortNormalizer implements DenormalizerInterface, NormalizerInterface, Deno
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\Port';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class PortNormalizer implements DenormalizerInterface, NormalizerInterface, Deno
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\Port();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('IP', $data) && $data['IP'] !== null) {
             $object->setIP($data['IP']);
         }
@@ -59,21 +68,20 @@ class PortNormalizer implements DenormalizerInterface, NormalizerInterface, Deno
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
         if (null !== $object->getIP()) {
             $data['IP'] = $object->getIP();
         }
-        if (null !== $object->getPrivatePort()) {
-            $data['PrivatePort'] = $object->getPrivatePort();
-        }
+        $data['PrivatePort'] = $object->getPrivatePort();
         if (null !== $object->getPublicPort()) {
             $data['PublicPort'] = $object->getPublicPort();
         }
-        if (null !== $object->getType()) {
-            $data['Type'] = $object->getType();
-        }
+        $data['Type'] = $object->getType();
         return $data;
     }
 }

@@ -2,15 +2,18 @@
 
 namespace Docker\Api\Exception;
 
-class ExecInspectNotFoundException extends \RuntimeException implements ClientException
+class ExecInspectNotFoundException extends NotFoundException
 {
+    /**
+     * @var \Docker\Api\Model\ErrorResponse
+     */
     private $errorResponse;
     public function __construct(\Docker\Api\Model\ErrorResponse $errorResponse)
     {
-        parent::__construct('No such exec instance', 404);
+        parent::__construct('No such exec instance');
         $this->errorResponse = $errorResponse;
     }
-    public function getErrorResponse()
+    public function getErrorResponse() : \Docker\Api\Model\ErrorResponse
     {
         return $this->errorResponse;
     }

@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class PluginConfigInterfaceNormalizer implements DenormalizerInterface, Normaliz
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\PluginConfigInterface';
@@ -24,6 +27,9 @@ class PluginConfigInterfaceNormalizer implements DenormalizerInterface, Normaliz
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\PluginConfigInterface';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class PluginConfigInterfaceNormalizer implements DenormalizerInterface, Normaliz
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\PluginConfigInterface();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('Types', $data) && $data['Types'] !== null) {
             $values = array();
             foreach ($data['Types'] as $value) {
@@ -57,19 +66,18 @@ class PluginConfigInterfaceNormalizer implements DenormalizerInterface, Normaliz
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        if (null !== $object->getTypes()) {
-            $values = array();
-            foreach ($object->getTypes() as $value) {
-                $values[] = $this->normalizer->normalize($value, 'json', $context);
-            }
-            $data['Types'] = $values;
+        $values = array();
+        foreach ($object->getTypes() as $value) {
+            $values[] = $this->normalizer->normalize($value, 'json', $context);
         }
-        if (null !== $object->getSocket()) {
-            $data['Socket'] = $object->getSocket();
-        }
+        $data['Types'] = $values;
+        $data['Socket'] = $object->getSocket();
         if (null !== $object->getProtocolScheme()) {
             $data['ProtocolScheme'] = $object->getProtocolScheme();
         }

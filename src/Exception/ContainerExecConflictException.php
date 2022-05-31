@@ -2,15 +2,18 @@
 
 namespace Docker\Api\Exception;
 
-class ContainerExecConflictException extends \RuntimeException implements ClientException
+class ContainerExecConflictException extends ConflictException
 {
+    /**
+     * @var \Docker\Api\Model\ErrorResponse
+     */
     private $errorResponse;
     public function __construct(\Docker\Api\Model\ErrorResponse $errorResponse)
     {
-        parent::__construct('container is paused', 409);
+        parent::__construct('container is paused');
         $this->errorResponse = $errorResponse;
     }
-    public function getErrorResponse()
+    public function getErrorResponse() : \Docker\Api\Model\ErrorResponse
     {
         return $this->errorResponse;
     }

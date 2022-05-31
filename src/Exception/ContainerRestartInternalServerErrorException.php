@@ -2,15 +2,18 @@
 
 namespace Docker\Api\Exception;
 
-class ContainerRestartInternalServerErrorException extends \RuntimeException implements ServerException
+class ContainerRestartInternalServerErrorException extends InternalServerErrorException
 {
+    /**
+     * @var \Docker\Api\Model\ErrorResponse
+     */
     private $errorResponse;
     public function __construct(\Docker\Api\Model\ErrorResponse $errorResponse)
     {
-        parent::__construct('server error', 500);
+        parent::__construct('server error');
         $this->errorResponse = $errorResponse;
     }
-    public function getErrorResponse()
+    public function getErrorResponse() : \Docker\Api\Model\ErrorResponse
     {
         return $this->errorResponse;
     }

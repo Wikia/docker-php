@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ExecStart extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class ExecStart extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     protected $id;
     /**
@@ -19,7 +19,7 @@ class ExecStart extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jan
         $this->id = $id;
         $this->body = $execStartConfig;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';
@@ -44,7 +44,7 @@ class ExecStart extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jan
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
             return null;

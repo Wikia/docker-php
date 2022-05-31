@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class VolumeUsageDataNormalizer implements DenormalizerInterface, NormalizerInte
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\VolumeUsageData';
@@ -24,6 +27,9 @@ class VolumeUsageDataNormalizer implements DenormalizerInterface, NormalizerInte
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\VolumeUsageData';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class VolumeUsageDataNormalizer implements DenormalizerInterface, NormalizerInte
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\VolumeUsageData();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('Size', $data) && $data['Size'] !== null) {
             $object->setSize($data['Size']);
         }
@@ -47,15 +56,14 @@ class VolumeUsageDataNormalizer implements DenormalizerInterface, NormalizerInte
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        if (null !== $object->getSize()) {
-            $data['Size'] = $object->getSize();
-        }
-        if (null !== $object->getRefCount()) {
-            $data['RefCount'] = $object->getRefCount();
-        }
+        $data['Size'] = $object->getSize();
+        $data['RefCount'] = $object->getRefCount();
         return $data;
     }
 }

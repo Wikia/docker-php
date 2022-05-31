@@ -2,7 +2,7 @@
 
 namespace Docker\Api;
 
-class Client extends \Jane\OpenApiRuntime\Client\Client
+class Client extends \Docker\Api\Runtime\Client\Client
 {
     /**
     * Returns a list of containers. For details on the format, see the
@@ -2341,7 +2341,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Client
     {
         return $this->executeEndpoint(new \Docker\Api\Endpoint\Session(), $fetch);
     }
-    public static function create($httpClient = null, array $additionalPlugins = array())
+    public static function create($httpClient = null, array $additionalPlugins = array(), array $additionalNormalizers = array())
     {
         if (null === $httpClient) {
             $httpClient = \Http\Discovery\Psr18ClientDiscovery::find();
@@ -2353,7 +2353,11 @@ class Client extends \Jane\OpenApiRuntime\Client\Client
         }
         $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
         $streamFactory = \Http\Discovery\Psr17FactoryDiscovery::findStreamFactory();
-        $serializer = new \Symfony\Component\Serializer\Serializer(array(new \Symfony\Component\Serializer\Normalizer\ArrayDenormalizer(), new \Docker\Api\Normalizer\JaneObjectNormalizer()), array(new \Symfony\Component\Serializer\Encoder\JsonEncoder(new \Symfony\Component\Serializer\Encoder\JsonEncode(), new \Symfony\Component\Serializer\Encoder\JsonDecode(array('json_decode_associative' => true)))));
+        $normalizers = array(new \Symfony\Component\Serializer\Normalizer\ArrayDenormalizer(), new \Docker\Api\Normalizer\JaneObjectNormalizer());
+        if (count($additionalNormalizers) > 0) {
+            $normalizers = array_merge($normalizers, $additionalNormalizers);
+        }
+        $serializer = new \Symfony\Component\Serializer\Serializer($normalizers, array(new \Symfony\Component\Serializer\Encoder\JsonEncoder(new \Symfony\Component\Serializer\Encoder\JsonEncode(), new \Symfony\Component\Serializer\Encoder\JsonDecode(array('json_decode_associative' => true)))));
         return new static($httpClient, $requestFactory, $serializer, $streamFactory);
     }
 }

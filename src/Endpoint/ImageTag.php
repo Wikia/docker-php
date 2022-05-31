@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ImageTag extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class ImageTag extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     protected $name;
     /**
@@ -19,7 +19,7 @@ class ImageTag extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane
         $this->name = $name;
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';
@@ -56,7 +56,7 @@ class ImageTag extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (201 === $status) {
             return null;

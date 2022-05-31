@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class TaskLogs extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class TaskLogs extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     protected $id;
     /**
@@ -31,7 +31,7 @@ class TaskLogs extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane
         $this->id = $id;
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';
@@ -72,7 +72,7 @@ class TaskLogs extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
             return json_decode($body);
