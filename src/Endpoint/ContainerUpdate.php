@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ContainerUpdate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class ContainerUpdate extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     protected $id;
     /**
@@ -18,7 +18,7 @@ class ContainerUpdate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implement
         $this->id = $id;
         $this->body = $update;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';
@@ -43,7 +43,7 @@ class ContainerUpdate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implement
      *
      * @return null|\Docker\Api\Model\ContainersIdUpdatePostResponse200
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
             return $serializer->deserialize($body, 'Docker\\Api\\Model\\ContainersIdUpdatePostResponse200', 'json');

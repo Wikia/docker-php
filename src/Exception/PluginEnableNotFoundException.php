@@ -2,15 +2,18 @@
 
 namespace Docker\Api\Exception;
 
-class PluginEnableNotFoundException extends \RuntimeException implements ClientException
+class PluginEnableNotFoundException extends NotFoundException
 {
+    /**
+     * @var \Docker\Api\Model\ErrorResponse
+     */
     private $errorResponse;
     public function __construct(\Docker\Api\Model\ErrorResponse $errorResponse)
     {
-        parent::__construct('plugin is not installed', 404);
+        parent::__construct('plugin is not installed');
         $this->errorResponse = $errorResponse;
     }
-    public function getErrorResponse()
+    public function getErrorResponse() : \Docker\Api\Model\ErrorResponse
     {
         return $this->errorResponse;
     }

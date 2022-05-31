@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ImageBuild extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class ImageBuild extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     /**
     * Build an image from a tar archive with a `Dockerfile` in it.
@@ -79,7 +79,7 @@ class ImageBuild extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Ja
         $this->queryParameters = $queryParameters;
         $this->headerParameters = $headerParameters;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';
@@ -146,7 +146,7 @@ class ImageBuild extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Ja
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
             return null;

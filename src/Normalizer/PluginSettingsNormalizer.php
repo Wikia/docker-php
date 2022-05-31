@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class PluginSettingsNormalizer implements DenormalizerInterface, NormalizerInter
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\PluginSettings';
@@ -24,6 +27,9 @@ class PluginSettingsNormalizer implements DenormalizerInterface, NormalizerInter
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\PluginSettings';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class PluginSettingsNormalizer implements DenormalizerInterface, NormalizerInter
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\PluginSettings();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('Mounts', $data) && $data['Mounts'] !== null) {
             $values = array();
             foreach ($data['Mounts'] as $value) {
@@ -75,37 +84,32 @@ class PluginSettingsNormalizer implements DenormalizerInterface, NormalizerInter
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        if (null !== $object->getMounts()) {
-            $values = array();
-            foreach ($object->getMounts() as $value) {
-                $values[] = $this->normalizer->normalize($value, 'json', $context);
-            }
-            $data['Mounts'] = $values;
+        $values = array();
+        foreach ($object->getMounts() as $value) {
+            $values[] = $this->normalizer->normalize($value, 'json', $context);
         }
-        if (null !== $object->getEnv()) {
-            $values_1 = array();
-            foreach ($object->getEnv() as $value_1) {
-                $values_1[] = $value_1;
-            }
-            $data['Env'] = $values_1;
+        $data['Mounts'] = $values;
+        $values_1 = array();
+        foreach ($object->getEnv() as $value_1) {
+            $values_1[] = $value_1;
         }
-        if (null !== $object->getArgs()) {
-            $values_2 = array();
-            foreach ($object->getArgs() as $value_2) {
-                $values_2[] = $value_2;
-            }
-            $data['Args'] = $values_2;
+        $data['Env'] = $values_1;
+        $values_2 = array();
+        foreach ($object->getArgs() as $value_2) {
+            $values_2[] = $value_2;
         }
-        if (null !== $object->getDevices()) {
-            $values_3 = array();
-            foreach ($object->getDevices() as $value_3) {
-                $values_3[] = $this->normalizer->normalize($value_3, 'json', $context);
-            }
-            $data['Devices'] = $values_3;
+        $data['Args'] = $values_2;
+        $values_3 = array();
+        foreach ($object->getDevices() as $value_3) {
+            $values_3[] = $this->normalizer->normalize($value_3, 'json', $context);
         }
+        $data['Devices'] = $values_3;
         return $data;
     }
 }

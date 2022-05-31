@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class ContainersCreatePostResponse201Normalizer implements DenormalizerInterface
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\ContainersCreatePostResponse201';
@@ -24,6 +27,9 @@ class ContainersCreatePostResponse201Normalizer implements DenormalizerInterface
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\ContainersCreatePostResponse201';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class ContainersCreatePostResponse201Normalizer implements DenormalizerInterface
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\ContainersCreatePostResponse201();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('Id', $data) && $data['Id'] !== null) {
             $object->setId($data['Id']);
         }
@@ -51,19 +60,18 @@ class ContainersCreatePostResponse201Normalizer implements DenormalizerInterface
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        if (null !== $object->getId()) {
-            $data['Id'] = $object->getId();
+        $data['Id'] = $object->getId();
+        $values = array();
+        foreach ($object->getWarnings() as $value) {
+            $values[] = $value;
         }
-        if (null !== $object->getWarnings()) {
-            $values = array();
-            foreach ($object->getWarnings() as $value) {
-                $values[] = $value;
-            }
-            $data['Warnings'] = $values;
-        }
+        $data['Warnings'] = $values;
         return $data;
     }
 }

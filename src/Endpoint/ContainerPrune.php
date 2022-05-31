@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ContainerPrune extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class ContainerPrune extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     /**
     * 
@@ -20,7 +20,7 @@ class ContainerPrune extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements
     {
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';
@@ -53,7 +53,7 @@ class ContainerPrune extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements
      *
      * @return null|\Docker\Api\Model\ContainersPrunePostResponse200
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
             return $serializer->deserialize($body, 'Docker\\Api\\Model\\ContainersPrunePostResponse200', 'json');

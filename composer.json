@@ -3,10 +3,10 @@
     "description": "PHP client for Docker API generated from Docker's OpenAPI spec",
     "type": "library",
     "require": {
-        "jane-php/open-api-runtime": "^6.0"
+        "jane-php/open-api-runtime": "7.2.2"
     },
     "require-dev": {
-        "jane-php/open-api-2": "^6.0"
+        "jane-php/open-api-2": "7.2.2"
     },
     "autoload": {
        "psr-4": {

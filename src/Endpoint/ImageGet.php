@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ImageGet extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class ImageGet extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     protected $name;
     /**
@@ -37,7 +37,7 @@ class ImageGet extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane
     {
         $this->name = $name;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';
@@ -61,7 +61,7 @@ class ImageGet extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
             return json_decode($body);

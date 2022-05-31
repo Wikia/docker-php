@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class PluginDelete extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class PluginDelete extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     protected $name;
     /**
@@ -22,7 +22,7 @@ class PluginDelete extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \
         $this->name = $name;
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'DELETE';
@@ -56,7 +56,7 @@ class PluginDelete extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \
      *
      * @return null|\Docker\Api\Model\Plugin
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
             return $serializer->deserialize($body, 'Docker\\Api\\Model\\Plugin', 'json');

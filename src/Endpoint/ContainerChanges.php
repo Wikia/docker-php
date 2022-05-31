@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ContainerChanges extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class ContainerChanges extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     protected $id;
     /**
@@ -20,7 +20,7 @@ class ContainerChanges extends \Jane\OpenApiRuntime\Client\BaseEndpoint implemen
     {
         $this->id = $id;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';
@@ -45,7 +45,7 @@ class ContainerChanges extends \Jane\OpenApiRuntime\Client\BaseEndpoint implemen
      *
      * @return null|\Docker\Api\Model\ContainersIdChangesGetResponse200Item[]
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
             return $serializer->deserialize($body, 'Docker\\Api\\Model\\ContainersIdChangesGetResponse200Item[]', 'json');

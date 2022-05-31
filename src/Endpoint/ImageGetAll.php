@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ImageGetAll extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class ImageGetAll extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     /**
     * Get a tarball containing all images and metadata for several image
@@ -25,7 +25,7 @@ class ImageGetAll extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
     {
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';
@@ -58,7 +58,7 @@ class ImageGetAll extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
             return json_decode($body);

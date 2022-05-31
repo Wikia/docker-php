@@ -2,15 +2,18 @@
 
 namespace Docker\Api\Exception;
 
-class SecretCreateConflictException extends \RuntimeException implements ClientException
+class SecretCreateConflictException extends ConflictException
 {
+    /**
+     * @var \Docker\Api\Model\ErrorResponse
+     */
     private $errorResponse;
     public function __construct(\Docker\Api\Model\ErrorResponse $errorResponse)
     {
-        parent::__construct('name conflicts with an existing object', 409);
+        parent::__construct('name conflicts with an existing object');
         $this->errorResponse = $errorResponse;
     }
-    public function getErrorResponse()
+    public function getErrorResponse() : \Docker\Api\Model\ErrorResponse
     {
         return $this->errorResponse;
     }

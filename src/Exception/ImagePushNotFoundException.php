@@ -2,15 +2,18 @@
 
 namespace Docker\Api\Exception;
 
-class ImagePushNotFoundException extends \RuntimeException implements ClientException
+class ImagePushNotFoundException extends NotFoundException
 {
+    /**
+     * @var \Docker\Api\Model\ErrorResponse
+     */
     private $errorResponse;
     public function __construct(\Docker\Api\Model\ErrorResponse $errorResponse)
     {
-        parent::__construct('No such image', 404);
+        parent::__construct('No such image');
         $this->errorResponse = $errorResponse;
     }
-    public function getErrorResponse()
+    public function getErrorResponse() : \Docker\Api\Model\ErrorResponse
     {
         return $this->errorResponse;
     }

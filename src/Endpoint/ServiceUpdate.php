@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ServiceUpdate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class ServiceUpdate extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     protected $id;
     /**
@@ -41,7 +41,7 @@ class ServiceUpdate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements 
         $this->queryParameters = $queryParameters;
         $this->headerParameters = $headerParameters;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';
@@ -88,7 +88,7 @@ class ServiceUpdate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements 
      *
      * @return null|\Docker\Api\Model\ServiceUpdateResponse
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (200 === $status) {
             return $serializer->deserialize($body, 'Docker\\Api\\Model\\ServiceUpdateResponse', 'json');

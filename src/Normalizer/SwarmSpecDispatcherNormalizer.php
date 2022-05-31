@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class SwarmSpecDispatcherNormalizer implements DenormalizerInterface, Normalizer
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\SwarmSpecDispatcher';
@@ -24,6 +27,9 @@ class SwarmSpecDispatcherNormalizer implements DenormalizerInterface, Normalizer
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\SwarmSpecDispatcher';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class SwarmSpecDispatcherNormalizer implements DenormalizerInterface, Normalizer
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\SwarmSpecDispatcher();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('HeartbeatPeriod', $data) && $data['HeartbeatPeriod'] !== null) {
             $object->setHeartbeatPeriod($data['HeartbeatPeriod']);
         }
@@ -41,6 +50,9 @@ class SwarmSpecDispatcherNormalizer implements DenormalizerInterface, Normalizer
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();

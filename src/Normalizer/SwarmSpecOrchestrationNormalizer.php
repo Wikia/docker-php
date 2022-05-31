@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class SwarmSpecOrchestrationNormalizer implements DenormalizerInterface, Normali
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\SwarmSpecOrchestration';
@@ -24,6 +27,9 @@ class SwarmSpecOrchestrationNormalizer implements DenormalizerInterface, Normali
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\SwarmSpecOrchestration';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class SwarmSpecOrchestrationNormalizer implements DenormalizerInterface, Normali
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\SwarmSpecOrchestration();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('TaskHistoryRetentionLimit', $data) && $data['TaskHistoryRetentionLimit'] !== null) {
             $object->setTaskHistoryRetentionLimit($data['TaskHistoryRetentionLimit']);
         }
@@ -41,6 +50,9 @@ class SwarmSpecOrchestrationNormalizer implements DenormalizerInterface, Normali
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();

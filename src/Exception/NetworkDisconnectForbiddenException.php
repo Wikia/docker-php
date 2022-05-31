@@ -2,15 +2,18 @@
 
 namespace Docker\Api\Exception;
 
-class NetworkDisconnectForbiddenException extends \RuntimeException implements ClientException
+class NetworkDisconnectForbiddenException extends ForbiddenException
 {
+    /**
+     * @var \Docker\Api\Model\ErrorResponse
+     */
     private $errorResponse;
     public function __construct(\Docker\Api\Model\ErrorResponse $errorResponse)
     {
-        parent::__construct('Operation not supported for swarm scoped networks', 403);
+        parent::__construct('Operation not supported for swarm scoped networks');
         $this->errorResponse = $errorResponse;
     }
-    public function getErrorResponse()
+    public function getErrorResponse() : \Docker\Api\Model\ErrorResponse
     {
         return $this->errorResponse;
     }

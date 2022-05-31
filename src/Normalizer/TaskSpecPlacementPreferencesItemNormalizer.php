@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class TaskSpecPlacementPreferencesItemNormalizer implements DenormalizerInterfac
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\TaskSpecPlacementPreferencesItem';
@@ -24,6 +27,9 @@ class TaskSpecPlacementPreferencesItemNormalizer implements DenormalizerInterfac
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\TaskSpecPlacementPreferencesItem';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class TaskSpecPlacementPreferencesItemNormalizer implements DenormalizerInterfac
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\TaskSpecPlacementPreferencesItem();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('Spread', $data) && $data['Spread'] !== null) {
             $object->setSpread($this->denormalizer->denormalize($data['Spread'], 'Docker\\Api\\Model\\TaskSpecPlacementPreferencesItemSpread', 'json', $context));
         }
@@ -41,6 +50,9 @@ class TaskSpecPlacementPreferencesItemNormalizer implements DenormalizerInterfac
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();

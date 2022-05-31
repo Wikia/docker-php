@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class VolumeNormalizer implements DenormalizerInterface, NormalizerInterface, De
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\Volume';
@@ -24,6 +27,9 @@ class VolumeNormalizer implements DenormalizerInterface, NormalizerInterface, De
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\Volume';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class VolumeNormalizer implements DenormalizerInterface, NormalizerInterface, De
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\Volume();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('Name', $data) && $data['Name'] !== null) {
             $object->setName($data['Name']);
         }
@@ -101,18 +110,15 @@ class VolumeNormalizer implements DenormalizerInterface, NormalizerInterface, De
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        if (null !== $object->getName()) {
-            $data['Name'] = $object->getName();
-        }
-        if (null !== $object->getDriver()) {
-            $data['Driver'] = $object->getDriver();
-        }
-        if (null !== $object->getMountpoint()) {
-            $data['Mountpoint'] = $object->getMountpoint();
-        }
+        $data['Name'] = $object->getName();
+        $data['Driver'] = $object->getDriver();
+        $data['Mountpoint'] = $object->getMountpoint();
         if (null !== $object->getCreatedAt()) {
             $data['CreatedAt'] = $object->getCreatedAt();
         }
@@ -123,23 +129,17 @@ class VolumeNormalizer implements DenormalizerInterface, NormalizerInterface, De
             }
             $data['Status'] = $values;
         }
-        if (null !== $object->getLabels()) {
-            $values_1 = array();
-            foreach ($object->getLabels() as $key_1 => $value_1) {
-                $values_1[$key_1] = $value_1;
-            }
-            $data['Labels'] = $values_1;
+        $values_1 = array();
+        foreach ($object->getLabels() as $key_1 => $value_1) {
+            $values_1[$key_1] = $value_1;
         }
-        if (null !== $object->getScope()) {
-            $data['Scope'] = $object->getScope();
+        $data['Labels'] = $values_1;
+        $data['Scope'] = $object->getScope();
+        $values_2 = array();
+        foreach ($object->getOptions() as $key_2 => $value_2) {
+            $values_2[$key_2] = $value_2;
         }
-        if (null !== $object->getOptions()) {
-            $values_2 = array();
-            foreach ($object->getOptions() as $key_2 => $value_2) {
-                $values_2[$key_2] = $value_2;
-            }
-            $data['Options'] = $values_2;
-        }
+        $data['Options'] = $values_2;
         if (null !== $object->getUsageData()) {
             $data['UsageData'] = $this->normalizer->normalize($object->getUsageData(), 'json', $context);
         }

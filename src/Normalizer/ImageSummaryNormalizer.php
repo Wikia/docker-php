@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class ImageSummaryNormalizer implements DenormalizerInterface, NormalizerInterfa
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\ImageSummary';
@@ -24,6 +27,9 @@ class ImageSummaryNormalizer implements DenormalizerInterface, NormalizerInterfa
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\ImageSummary';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class ImageSummaryNormalizer implements DenormalizerInterface, NormalizerInterfa
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\ImageSummary();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('Id', $data) && $data['Id'] !== null) {
             $object->setId($data['Id']);
         }
@@ -107,51 +116,34 @@ class ImageSummaryNormalizer implements DenormalizerInterface, NormalizerInterfa
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        if (null !== $object->getId()) {
-            $data['Id'] = $object->getId();
+        $data['Id'] = $object->getId();
+        $data['ParentId'] = $object->getParentId();
+        $values = array();
+        foreach ($object->getRepoTags() as $value) {
+            $values[] = $value;
         }
-        if (null !== $object->getParentId()) {
-            $data['ParentId'] = $object->getParentId();
+        $data['RepoTags'] = $values;
+        $values_1 = array();
+        foreach ($object->getRepoDigests() as $value_1) {
+            $values_1[] = $value_1;
         }
-        if (null !== $object->getRepoTags()) {
-            $values = array();
-            foreach ($object->getRepoTags() as $value) {
-                $values[] = $value;
-            }
-            $data['RepoTags'] = $values;
+        $data['RepoDigests'] = $values_1;
+        $data['Created'] = $object->getCreated();
+        $data['Size'] = $object->getSize();
+        $data['SharedSize'] = $object->getSharedSize();
+        $data['VirtualSize'] = $object->getVirtualSize();
+        $values_2 = array();
+        foreach ($object->getLabels() as $key => $value_2) {
+            $values_2[$key] = $value_2;
         }
-        if (null !== $object->getRepoDigests()) {
-            $values_1 = array();
-            foreach ($object->getRepoDigests() as $value_1) {
-                $values_1[] = $value_1;
-            }
-            $data['RepoDigests'] = $values_1;
-        }
-        if (null !== $object->getCreated()) {
-            $data['Created'] = $object->getCreated();
-        }
-        if (null !== $object->getSize()) {
-            $data['Size'] = $object->getSize();
-        }
-        if (null !== $object->getSharedSize()) {
-            $data['SharedSize'] = $object->getSharedSize();
-        }
-        if (null !== $object->getVirtualSize()) {
-            $data['VirtualSize'] = $object->getVirtualSize();
-        }
-        if (null !== $object->getLabels()) {
-            $values_2 = array();
-            foreach ($object->getLabels() as $key => $value_2) {
-                $values_2[$key] = $value_2;
-            }
-            $data['Labels'] = $values_2;
-        }
-        if (null !== $object->getContainers()) {
-            $data['Containers'] = $object->getContainers();
-        }
+        $data['Labels'] = $values_2;
+        $data['Containers'] = $object->getContainers();
         return $data;
     }
 }

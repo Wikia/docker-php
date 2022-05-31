@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class PluginConfigLinuxNormalizer implements DenormalizerInterface, NormalizerIn
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\PluginConfigLinux';
@@ -24,6 +27,9 @@ class PluginConfigLinuxNormalizer implements DenormalizerInterface, NormalizerIn
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\PluginConfigLinux';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class PluginConfigLinuxNormalizer implements DenormalizerInterface, NormalizerIn
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\PluginConfigLinux();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('Capabilities', $data) && $data['Capabilities'] !== null) {
             $values = array();
             foreach ($data['Capabilities'] as $value) {
@@ -61,26 +70,23 @@ class PluginConfigLinuxNormalizer implements DenormalizerInterface, NormalizerIn
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        if (null !== $object->getCapabilities()) {
-            $values = array();
-            foreach ($object->getCapabilities() as $value) {
-                $values[] = $value;
-            }
-            $data['Capabilities'] = $values;
+        $values = array();
+        foreach ($object->getCapabilities() as $value) {
+            $values[] = $value;
         }
-        if (null !== $object->getAllowAllDevices()) {
-            $data['AllowAllDevices'] = $object->getAllowAllDevices();
+        $data['Capabilities'] = $values;
+        $data['AllowAllDevices'] = $object->getAllowAllDevices();
+        $values_1 = array();
+        foreach ($object->getDevices() as $value_1) {
+            $values_1[] = $this->normalizer->normalize($value_1, 'json', $context);
         }
-        if (null !== $object->getDevices()) {
-            $values_1 = array();
-            foreach ($object->getDevices() as $value_1) {
-                $values_1[] = $this->normalizer->normalize($value_1, 'json', $context);
-            }
-            $data['Devices'] = $values_1;
-        }
+        $data['Devices'] = $values_1;
         return $data;
     }
 }

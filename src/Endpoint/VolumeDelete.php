@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class VolumeDelete extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class VolumeDelete extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     protected $name;
     /**
@@ -18,7 +18,7 @@ class VolumeDelete extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \
         $this->name = $name;
         $this->queryParameters = $queryParameters;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'DELETE';
@@ -53,7 +53,7 @@ class VolumeDelete extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (204 === $status) {
             return null;

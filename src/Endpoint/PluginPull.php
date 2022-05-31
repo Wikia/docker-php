@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class PluginPull extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class PluginPull extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     /**
     * Pulls and installs a plugin. After the plugin is installed, it can be
@@ -35,7 +35,7 @@ class PluginPull extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Ja
         $this->queryParameters = $queryParameters;
         $this->headerParameters = $headerParameters;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';
@@ -78,7 +78,7 @@ class PluginPull extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Ja
      *
      * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (204 === $status) {
             return null;

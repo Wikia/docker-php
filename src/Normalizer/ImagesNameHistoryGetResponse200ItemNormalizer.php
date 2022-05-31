@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class ImagesNameHistoryGetResponse200ItemNormalizer implements DenormalizerInter
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\ImagesNameHistoryGetResponse200Item';
@@ -24,6 +27,9 @@ class ImagesNameHistoryGetResponse200ItemNormalizer implements DenormalizerInter
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\ImagesNameHistoryGetResponse200Item';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class ImagesNameHistoryGetResponse200ItemNormalizer implements DenormalizerInter
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\ImagesNameHistoryGetResponse200Item();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('Id', $data) && $data['Id'] !== null) {
             $object->setId($data['Id']);
         }
@@ -75,31 +84,22 @@ class ImagesNameHistoryGetResponse200ItemNormalizer implements DenormalizerInter
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
-        if (null !== $object->getId()) {
-            $data['Id'] = $object->getId();
+        $data['Id'] = $object->getId();
+        $data['Created'] = $object->getCreated();
+        $data['CreatedBy'] = $object->getCreatedBy();
+        $values = array();
+        foreach ($object->getTags() as $value) {
+            $values[] = $value;
         }
-        if (null !== $object->getCreated()) {
-            $data['Created'] = $object->getCreated();
-        }
-        if (null !== $object->getCreatedBy()) {
-            $data['CreatedBy'] = $object->getCreatedBy();
-        }
-        if (null !== $object->getTags()) {
-            $values = array();
-            foreach ($object->getTags() as $value) {
-                $values[] = $value;
-            }
-            $data['Tags'] = $values;
-        }
-        if (null !== $object->getSize()) {
-            $data['Size'] = $object->getSize();
-        }
-        if (null !== $object->getComment()) {
-            $data['Comment'] = $object->getComment();
-        }
+        $data['Tags'] = $values;
+        $data['Size'] = $object->getSize();
+        $data['Comment'] = $object->getComment();
         return $data;
     }
 }

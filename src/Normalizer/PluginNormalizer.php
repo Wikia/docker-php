@@ -2,8 +2,8 @@
 
 namespace Docker\Api\Normalizer;
 
-use Jane\JsonSchemaRuntime\Reference;
-use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\Component\JsonSchemaRuntime\Reference;
+use Docker\Api\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -16,6 +16,9 @@ class PluginNormalizer implements DenormalizerInterface, NormalizerInterface, De
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
+    /**
+     * @return bool
+     */
     public function supportsDenormalization($data, $type, $format = null)
     {
         return $type === 'Docker\\Api\\Model\\Plugin';
@@ -24,6 +27,9 @@ class PluginNormalizer implements DenormalizerInterface, NormalizerInterface, De
     {
         return is_object($data) && get_class($data) === 'Docker\\Api\\Model\\Plugin';
     }
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
         if (isset($data['$ref'])) {
@@ -33,6 +39,9 @@ class PluginNormalizer implements DenormalizerInterface, NormalizerInterface, De
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \Docker\Api\Model\Plugin();
+        if (null === $data || false === \is_array($data)) {
+            return $object;
+        }
         if (\array_key_exists('Id', $data) && $data['Id'] !== null) {
             $object->setId($data['Id']);
         }
@@ -71,27 +80,22 @@ class PluginNormalizer implements DenormalizerInterface, NormalizerInterface, De
         }
         return $object;
     }
+    /**
+     * @return array|string|int|float|bool|\ArrayObject|null
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = array();
         if (null !== $object->getId()) {
             $data['Id'] = $object->getId();
         }
-        if (null !== $object->getName()) {
-            $data['Name'] = $object->getName();
-        }
-        if (null !== $object->getEnabled()) {
-            $data['Enabled'] = $object->getEnabled();
-        }
-        if (null !== $object->getSettings()) {
-            $data['Settings'] = $this->normalizer->normalize($object->getSettings(), 'json', $context);
-        }
+        $data['Name'] = $object->getName();
+        $data['Enabled'] = $object->getEnabled();
+        $data['Settings'] = $this->normalizer->normalize($object->getSettings(), 'json', $context);
         if (null !== $object->getPluginReference()) {
             $data['PluginReference'] = $object->getPluginReference();
         }
-        if (null !== $object->getConfig()) {
-            $data['Config'] = $this->normalizer->normalize($object->getConfig(), 'json', $context);
-        }
+        $data['Config'] = $this->normalizer->normalize($object->getConfig(), 'json', $context);
         return $data;
     }
 }

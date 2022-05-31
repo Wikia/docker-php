@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class ServiceCreate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class ServiceCreate extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     /**
     * 
@@ -22,7 +22,7 @@ class ServiceCreate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements 
         $this->body = $body;
         $this->headerParameters = $headerParameters;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';
@@ -59,7 +59,7 @@ class ServiceCreate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements 
      *
      * @return null|\Docker\Api\Model\ServicesCreatePostResponse201
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (201 === $status) {
             return $serializer->deserialize($body, 'Docker\\Api\\Model\\ServicesCreatePostResponse201', 'json');

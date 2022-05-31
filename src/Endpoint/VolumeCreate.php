@@ -2,7 +2,7 @@
 
 namespace Docker\Api\Endpoint;
 
-class VolumeCreate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
+class VolumeCreate extends \Docker\Api\Runtime\Client\BaseEndpoint implements \Docker\Api\Runtime\Client\Endpoint
 {
     /**
      * 
@@ -13,7 +13,7 @@ class VolumeCreate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \
     {
         $this->body = $volumeConfig;
     }
-    use \Jane\OpenApiRuntime\Client\EndpointTrait;
+    use \Docker\Api\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'POST';
@@ -37,7 +37,7 @@ class VolumeCreate extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \
      *
      * @return null|\Docker\Api\Model\Volume
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (201 === $status) {
             return $serializer->deserialize($body, 'Docker\\Api\\Model\\Volume', 'json');
